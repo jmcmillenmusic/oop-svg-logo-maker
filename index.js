@@ -43,7 +43,7 @@ function writeToFile(fileName, data) {
 function init() {
     inquirer.prompt(questions)
       .then(function(answers) {
-        const fileName ='logo.svg'
+        const fileName = 'logo.svg'
           writeToFile(fileName, answers);
       });
 }
