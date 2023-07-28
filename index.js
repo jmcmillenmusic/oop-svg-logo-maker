@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateShape = require('./lib/shapes');
+var svgData;
 
 // Creates an object array with a list of questions to be presented to the user
 const questions = [
@@ -22,15 +23,15 @@ const questions = [
     choices: ['circle', 'triangle', 'square']
   },
   {
-    type: 'list',
+    type: 'input',
     message: 'Which color would you like the shape from the previous question to be? (You can enter either a color name or a hexadecimal code.)',
     name: 'shapeColor',
   }
 ];
 
 // This writes the file with all of the data gathered from the user.
-function writeToFile(fileName, data) {
-  fs.writeFile(fileName, generateShape(data), error => {
+function writeToFile(fileName) {
+  fs.writeFile(fileName, svgData, error => {
     if (error) {
       return console.log(error);
     } else {
@@ -43,6 +44,7 @@ function writeToFile(fileName, data) {
 function init() {
   inquirer.prompt(questions)
     .then(function(answers) {
+      svgData = generateShape(answers);
       const fileName = 'logo.svg'
         writeToFile(fileName, answers);
     });
